@@ -1,0 +1,23 @@
+[versions]
+junit = "5.9.2"
+webdrivermanager = "5.1.0"
+selenide = "6.11.2"
+allure = "2.20.1"
+aspectj = "1.9.19"
+lombok = "1.18.24"
+rest-assured = "5.3.0"
+
+[libraries]
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+webdrivermanager = { module = "io.github.bonigarcia:webdrivermanager", version.ref = "webdrivermanager" }
+selenide = { module = "com.codeborne:selenide", version.ref = "selenide" }
+allure-junit5 = { module = "io.qameta.allure:allure-junit5", version.ref = "allure" }
+allure-commandline = { module = "io.qameta.allure:allure-commandline", version.ref = "allure" }
+allure-assertj = { module = "io.qameta.allure:allure-assertj", version.ref = "allure" }
+allure-rest-assured = { module = "io.qameta.allure:allure-rest-assured", version.ref = "allure" }
+allure-java-commons = { module = "io.qameta.allure:allure-java-commons", version.ref = "allure" }
+aspectj = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+rest-assured = { module = "io.rest-assured:rest-assured", version.ref = "rest-assured" }
+
