@@ -4,11 +4,14 @@ Test automation framework for Orbit products.
 ### Requirements ###
 * Java 11+
 * Gradle 7.6+
-* Will to run UI and API tests :)
+* JUnit5 
+* Will to run UI and API tests
 
 ### Information
-* To see framework architecture visit: 
+* All dependencies version management is done through file: libs.versions.toml (location: gradle/libs.versions.toml)
+* To see framework architecture visit:
 * Framework supports next browsers: Chrome...
+* 
 
 ### How to run tests?
 Use provided gradle commands to run tests:

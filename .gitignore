@@ -38,5 +38,19 @@ bin/
 ### VS Code ###
 .vscode/
 
+### Compiled Java class files
+*.class
+data/*.txt
+.allure/
+
+### Log files
+*.log
+
+### Screenshot
+**/screenshots/
+
+### Package files
+*.jar
+
 ### Mac OS ###
 .DS_Store
