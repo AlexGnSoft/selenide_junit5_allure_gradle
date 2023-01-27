@@ -2,6 +2,7 @@
 junit = "5.9.2"
 webdrivermanager = "5.1.0"
 selenide = "6.11.2"
+selenium = "4.8.0"
 allure = "2.20.1"
 aspectj = "1.9.19"
 lombok = "1.18.24"
@@ -16,6 +17,7 @@ junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.re
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 webdrivermanager = { module = "io.github.bonigarcia:webdrivermanager", version.ref = "webdrivermanager" }
 selenide = { module = "com.codeborne:selenide", version.ref = "selenide" }
+selenium = { module = "org.seleniumhq.selenium:selenium-java", version.ref = "selenium" }
 allure-selenide = { module = "io.qameta.allure:allure-selenide", version.ref = "allure" }
 allure-junit5 = { module = "io.qameta.allure:allure-junit5", version.ref = "allure" }
 allure-commandline = { module = "io.qameta.allure:allure-commandline", version.ref = "allure" }

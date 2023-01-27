@@ -14,21 +14,22 @@ repositories {
 
 dependencies {
     testRuntimeOnly libs.junit.jupiter.engine
-    testImplementation libs.junit.jupiter.api
+    implementation libs.junit.jupiter.api
     testImplementation libs.webdrivermanager
-    testImplementation libs.selenide
+    implementation libs.selenium
+    implementation libs.selenide
     testImplementation libs.allure.junit5
     testImplementation libs.allure.commandline
     testImplementation libs.allure.assertj
     testImplementation libs.allure.rest.assured
     testImplementation libs.allure.java.commons
+    implementation libs.allure.selenide
     testImplementation libs.aspectj
     testImplementation libs.lombok
     testImplementation libs.rest.assured
-    testImplementation libs.slf4j
-    testImplementation libs.log4j.core
-    testImplementation libs.log4j.api
-
+    implementation libs.slf4j
+    implementation libs.log4j.core
+    implementation libs.log4j.api
 }
 
 test {
