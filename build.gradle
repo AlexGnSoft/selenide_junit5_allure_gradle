@@ -32,6 +32,7 @@ dependencies {
     implementation libs.log4j.api
 }
 
+
 test {
     useJUnitPlatform()
 }

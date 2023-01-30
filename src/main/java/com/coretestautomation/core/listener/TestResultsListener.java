@@ -58,9 +58,7 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        logger.info("Test '" + context.getDisplayName() + "' Disabled!",
-               context.getDisplayName(),
-               reason.orElse("No reason"));
+        logger.info("Test '" + context.getDisplayName() + "' Disabled!");
 
         testResultsStatus.add(TestResultStatus.DISABLED);
     }
@@ -70,6 +68,6 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
         Map<TestResultStatus, Long> summary = testResultsStatus.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-        logger.info("Overall summary for {} {}", context.getDisplayName(), summary.toString());
+        logger.info("Overall summary for {} {}");
     }
 }
