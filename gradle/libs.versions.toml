@@ -27,7 +27,6 @@ allure-java-commons = { module = "io.qameta.allure:allure-java-commons", version
 aspectj = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 rest-assured = { module = "io.rest-assured:rest-assured", version.ref = "rest-assured" }
-slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
 log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j" }
 

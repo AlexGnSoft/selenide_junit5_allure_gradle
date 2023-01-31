@@ -48,13 +48,13 @@ public class PropertiesFile {
         else throw new RuntimeException("Application url is not specified in the config.properties file");
     }
 
-    public static String getLogin() {
-        String login = properties.getProperty("login");
+    public String getUserId() {
+        String login = properties.getProperty("userId");
         if(login != null) return login;
         else throw new RuntimeException("login is not specified in the config.properties file.");
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         String password = properties.getProperty("password");
         if(password != null) return password;
         else throw new RuntimeException("password is not specified in the config.properties file.");

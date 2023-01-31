@@ -1,26 +1,15 @@
 package com.coretestautomation.domain.steps.holders;
 
-import com.coretestautomation.core.helper.IStepsReporter;
-import com.coretestautomation.domain.steps.interfaces.IAdminToolsSteps;
+import com.coretestautomation.domain.steps.implementation.LoginSteps;
 import com.coretestautomation.domain.steps.interfaces.ILoginSteps;
 
 public class SiteStepsHolder {
 
-    private ILoginSteps loginSteps;
-    private IAdminToolsSteps adminToolsSteps;
+    public final ILoginSteps loginSteps;
 
-    private final IStepsReporter reporter;
-
-
-    public SiteStepsHolder(IStepsReporter reporter) {
-        this.reporter = reporter;
+    public SiteStepsHolder() {
+        loginSteps = new LoginSteps();
     }
 
-    public ILoginSteps loginSteps() {
-        return loginSteps;
-    }
 
-    public IAdminToolsSteps adminToolsSteps() {
-        return adminToolsSteps;
-    }
 }

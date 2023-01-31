@@ -16,7 +16,7 @@ dependencies {
     testRuntimeOnly libs.junit.jupiter.engine
     implementation libs.junit.jupiter.api
     testImplementation libs.webdrivermanager
-    implementation libs.selenium
+    //implementation libs.selenium
     implementation libs.selenide
     testImplementation libs.allure.junit5
     testImplementation libs.allure.commandline
@@ -27,12 +27,14 @@ dependencies {
     testImplementation libs.aspectj
     testImplementation libs.lombok
     testImplementation libs.rest.assured
-    implementation libs.slf4j
     implementation libs.log4j.core
     implementation libs.log4j.api
-}
 
+}
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }

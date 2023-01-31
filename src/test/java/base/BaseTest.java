@@ -9,40 +9,33 @@ import com.coretestautomation.domain.steps.holders.SiteStepsHolder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import static com.codeborne.selenide.Selenide.open;
-import java.io.File;
 
 @ExtendWith({TestResultsListener.class, AllureSetup.class})
 public class BaseTest {
-
-    protected SiteStepsHolder site;
-    protected String login;
-    protected String password;
+    protected static SiteStepsHolder site = new SiteStepsHolder();
+    protected static PropertiesFile propertiesFile = new PropertiesFile();
+    protected static String url = propertiesFile.getApplicationUrl();
+    protected static String userId = propertiesFile.getUserId();
+    protected static String password = propertiesFile.getPassword();
 
     @BeforeAll
     public static void beforeAll() {
-        PropertiesFile propertiesFile = new PropertiesFile();
         Configuration.headless = false;
         Configuration.browser = propertiesFile.getBrowser();
         Configuration.browserSize = propertiesFile.getBrowserSize();
         Configuration.browserVersion = propertiesFile.getBrowserVersion();
-        open(propertiesFile.getApplicationUrl());
+
+        open(url);
+
+        site.loginSteps.loginAs(userId, password);
+        site.loginSteps.isUserLoggedIn(userId);
     }
 
     @AfterAll()
     public static void afterAll() {
         //Selenide.closeWindow();
         Selenide.closeWebDriver();
-    }
-
-
-    protected String getResourcesPath() {
-        String defaultPath = System.getProperty("user.dir") +
-                File.separator + "src" +
-                File.separator + "main" +
-                File.separator + "resources" +
-                File.separator + "data" +
-                File.separator;
-        return System.getProperty("resources.path", defaultPath);
     }
 }
