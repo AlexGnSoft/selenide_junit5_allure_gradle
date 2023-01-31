@@ -16,7 +16,6 @@ dependencies {
     testRuntimeOnly libs.junit.jupiter.engine
     implementation libs.junit.jupiter.api
     testImplementation libs.webdrivermanager
-    //implementation libs.selenium
     implementation libs.selenide
     testImplementation libs.allure.junit5
     testImplementation libs.allure.commandline

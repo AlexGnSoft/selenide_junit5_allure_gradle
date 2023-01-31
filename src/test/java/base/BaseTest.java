@@ -8,6 +8,8 @@ import com.coretestautomation.core.listener.TestResultsListener;
 import com.coretestautomation.domain.steps.holders.SiteStepsHolder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -31,6 +33,13 @@ public class BaseTest {
 
         site.loginSteps.loginAs(userId, password);
         site.loginSteps.isUserLoggedIn(userId);
+
+    }
+
+    @BeforeEach
+    void init(TestInfo testInfo) {
+        String callingTest = testInfo.getTestMethod().get().getName();
+        System.out.println(callingTest + " test" + " started");
     }
 
     @AfterAll()
