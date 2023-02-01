@@ -9,13 +9,6 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
     @Test
     @DisplayName("Add a new product test")
     public void addNewProduct_OR_T24(){
-
-
+        steps.adminSteps.addNewProduct();
     }
-
-
-
-
-
-
 }

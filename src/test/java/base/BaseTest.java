@@ -5,18 +5,17 @@ import com.codeborne.selenide.Selenide;
 import com.coretestautomation.core.config.PropertiesFile;
 import com.coretestautomation.core.listener.AllureSetup;
 import com.coretestautomation.core.listener.TestResultsListener;
-import com.coretestautomation.domain.steps.holders.SiteStepsHolder;
+import com.coretestautomation.domain.steps.holders.StepsContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import static com.codeborne.selenide.Selenide.open;
 
 @ExtendWith({TestResultsListener.class, AllureSetup.class})
 public class BaseTest {
-    protected static SiteStepsHolder site = new SiteStepsHolder();
+    protected static StepsContainer steps = new StepsContainer();
     protected static PropertiesFile propertiesFile = new PropertiesFile();
     protected static String url = propertiesFile.getApplicationUrl();
     protected static String userId = propertiesFile.getUserId();
@@ -31,14 +30,16 @@ public class BaseTest {
 
         open(url);
 
-        site.loginSteps.loginAs(userId, password);
-        site.loginSteps.isUserLoggedIn(userId);
+        steps.loginSteps.loginAs(userId, password);
+        steps.loginSteps.isUserLoggedIn(userId);
 
     }
 
     @BeforeEach
     void init(TestInfo testInfo) {
         String callingTest = testInfo.getTestMethod().get().getName();
+
+        //To do it with logger
         System.out.println(callingTest + " test" + " started");
     }
 

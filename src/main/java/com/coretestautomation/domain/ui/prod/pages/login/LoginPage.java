@@ -3,7 +3,6 @@ package com.coretestautomation.domain.ui.prod.pages.login;
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.domain.ui.prod.pages.AbstractPage;
 import org.openqa.selenium.By;
-
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage extends AbstractPage {
