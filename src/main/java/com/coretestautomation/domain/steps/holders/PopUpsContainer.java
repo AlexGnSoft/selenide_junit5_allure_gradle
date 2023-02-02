@@ -9,4 +9,6 @@ public class PopUpsContainer {
     public PopUpsContainer(){
         addProductPopUp = new AddProductPopUp();
     }
+
+
 }

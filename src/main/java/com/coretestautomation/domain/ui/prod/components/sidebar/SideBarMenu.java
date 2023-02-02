@@ -1,5 +1,7 @@
 package com.coretestautomation.domain.ui.prod.components.sidebar;
 
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.domain.ui.prod.components.AbstractComponent;
@@ -13,8 +15,11 @@ public class SideBarMenu extends AbstractComponent {
     public final ElementsCollection sideBarItems = $$(By.xpath("//div[@class='x-dataview-item']/div[contains(text(),'')]"));
 
 
-    public void openItem(String sideBarItemName){
-        if(sideBarElement.isDisplayed() & sideBarItems.size() > 10){
+    public void openItem(String sideBarItemName, int minSizeOfSideBarToBeInteractive){
+
+        if(sideBarElement.isDisplayed()){
+            sideBarItems.shouldHave(CollectionCondition.sizeGreaterThan(minSizeOfSideBarToBeInteractive));
+
             for (SelenideElement sideBarItem : sideBarItems) {
                 if (sideBarItem.getText().contains(sideBarItemName)) {
                     sideBarItem.click();
