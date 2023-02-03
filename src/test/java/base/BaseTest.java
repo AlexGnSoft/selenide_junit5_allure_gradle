@@ -24,7 +24,7 @@ public class BaseTest implements IDataGenerator {
 
     @BeforeAll
     public static void beforeAll() {
-        Configuration.headless = true;
+        Configuration.headless = false;
         Configuration.timeout = 8000;  //Timeout in milliseconds to fail the test, if conditions still not met
         Configuration.browser = propertiesFile.getBrowser();
         Configuration.browserSize = propertiesFile.getBrowserSize();

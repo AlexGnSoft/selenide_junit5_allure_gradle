@@ -26,13 +26,14 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
     public void addNewProduct_OR_T24(){
         Assertions.assertTrue(true);
         //Test data
-//        product.setProductName("AutoTestProduct " + getRandomString());
-//
-//        steps.adminSteps.addNewProduct(product);
-//
-//        boolean isProductAdded = steps.adminSteps.findProduct(product);
-//
-//        Assertions.assertTrue(isProductAdded, "Product was not added");
-    }
+        product.setProductName("AutoTestProduct " + getRandomString());
 
+        steps.adminSteps
+                .addNewProduct(product)
+                .findProduct(product);
+
+        boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInTable(product.getProductName(), "Product Name");
+
+        Assertions.assertTrue(verifyProductByName, "Product was not added");
+    }
 }
