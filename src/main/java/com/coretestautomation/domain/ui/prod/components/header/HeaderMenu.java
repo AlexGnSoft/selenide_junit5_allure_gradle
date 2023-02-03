@@ -1,7 +1,7 @@
 package com.coretestautomation.domain.ui.prod.components.header;
 
 import com.codeborne.selenide.SelenideElement;
-import com.coretestautomation.core.logger.Logger;
+import com.coretestautomation.core.logger.Log;
 import com.coretestautomation.domain.ui.prod.components.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
@@ -16,7 +16,6 @@ public class HeaderMenu extends AbstractComponent {
     public final SelenideElement programProfileHeaderTab = $(By.xpath("//span[text()='Program Profile']"));
     public final SelenideElement qaToolHeaderTab = $(By.xpath("//span[text()='QA Tool']"));
 
-
     public boolean isUserLoggedIn(String username) {
         By element = By.xpath(String.format(USERNAME_SPAN, username));
         SelenideElement userNameSpan = $(element);
@@ -24,7 +23,7 @@ public class HeaderMenu extends AbstractComponent {
         try {
             return userNameSpan.getText().contains(username);
         } catch (WebDriverException ex) {
-            Logger.error("Can not get username", ex);
+            Log.error("Can not get username", ex);
             return false;
         }
     }

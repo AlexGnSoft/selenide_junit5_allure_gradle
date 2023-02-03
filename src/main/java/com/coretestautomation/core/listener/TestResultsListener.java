@@ -1,5 +1,6 @@
 package com.coretestautomation.core.listener;
 
+import com.coretestautomation.core.logger.Log;
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -14,14 +15,10 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
 public class TestResultsListener implements TestWatcher, AfterAllCallback {
 
     protected static WebDriver driver;
-
     private static final List<TestResultStatus> testResultsStatus = new ArrayList<>();
-    private static final org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(TestResultsListener.class);
-
 
     private enum TestResultStatus {
         SUCCESSFUL, ABORTED, FAILED, DISABLED;
@@ -29,7 +26,7 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        log.info("Test '" + context.getDisplayName() + "' successfully finished!");
+        Log.info("Test '" + context.getDisplayName() + "' successfully finished!");
 
         testResultsStatus.add(TestResultStatus.SUCCESSFUL);
     }
@@ -37,7 +34,7 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
         String failureMessage = "Test '" +  context.getDisplayName() + "' failed! See screenshot attached.";
-        log.error(failureMessage);
+        Log.error(failureMessage);
 
         testResultsStatus.add(TestResultStatus.FAILED);
 
@@ -49,14 +46,14 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        log.info("Test '" + context.getDisplayName() + "' aborted!");
+        Log.info("Test '" + context.getDisplayName() + "' aborted!");
 
         testResultsStatus.add(TestResultStatus.ABORTED);
     }
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        log.info("Test '" + context.getDisplayName() + "' Disabled!");
+        Log.info("Test '" + context.getDisplayName() + "' Disabled!");
 
         testResultsStatus.add(TestResultStatus.DISABLED);
     }
@@ -66,6 +63,6 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
         Map<TestResultStatus, Long> summary = testResultsStatus.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-        log.info("Test result summary for {} {}", context.getDisplayName(), summary.toString());
+        //Log.info("Test result summary for {} {}", context.getDisplayName(), summary.toString());
     }
 }

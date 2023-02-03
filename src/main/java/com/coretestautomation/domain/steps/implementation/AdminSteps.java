@@ -44,11 +44,6 @@ public class AdminSteps implements IAdminSteps {
         page.productMaintenancePage.searchSelectSearchField.setValue("Product Name");
         page.productMaintenancePage.searchBtn.click();
 
-
-
-
-
-
         return exist;
     }
 }

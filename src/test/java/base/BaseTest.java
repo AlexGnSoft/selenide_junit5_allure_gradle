@@ -1,13 +1,12 @@
 package base;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import com.coretestautomation.core.config.PropertiesFile;
 import com.coretestautomation.core.helper.IDataGenerator;
 import com.coretestautomation.core.listener.AllureSetup;
 import com.coretestautomation.core.listener.TestResultsListener;
+import com.coretestautomation.core.logger.Log;
 import com.coretestautomation.domain.steps.holders.StepsContainer;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -22,9 +21,10 @@ public class BaseTest implements IDataGenerator {
     protected static String userId = propertiesFile.getUserId();
     protected static String password = propertiesFile.getPassword();
 
+
     @BeforeAll
     public static void beforeAll() {
-        Configuration.headless = false;
+        Configuration.headless = true;
         Configuration.timeout = 8000;  //Timeout in milliseconds to fail the test, if conditions still not met
         Configuration.browser = propertiesFile.getBrowser();
         Configuration.browserSize = propertiesFile.getBrowserSize();
@@ -40,9 +40,7 @@ public class BaseTest implements IDataGenerator {
     @BeforeEach
     void init(TestInfo testInfo) {
         String callingTest = testInfo.getTestMethod().get().getName();
-
-        //To do it with logger
-        System.out.println(callingTest + " test" + " started");
+        Log.info("Test " + "'" + callingTest + "'" + " started!");
     }
 
 }
