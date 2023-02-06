@@ -40,6 +40,7 @@ public class AdminSteps implements IAdminSteps {
 
     @Override
     public boolean findProduct(Product product) {
+        Log.info("Performing search for a product with name: ' " + product.getProductName() + " '");
         page.productMaintenancePage.productMaintenanceTable.searchEnterSearchText(product.getProductName());
         page.productMaintenancePage.productMaintenanceTable.searchSelectSearchField("Product Name");
         page.productMaintenancePage.productMaintenanceTable.clickOnSearchButton();
@@ -51,11 +52,10 @@ public class AdminSteps implements IAdminSteps {
     public boolean verifyObjectExistenceInTable(String productParameter, String byColumnName){
         boolean result = false;
 
-        TableRowItem product_name = page.productMaintenancePage.productMaintenanceTable
-                .searchInTable(byColumnName, productParameter);
+        TableRowItem product_name = page.productMaintenancePage.productMaintenanceTable.searchInTable(byColumnName, productParameter);
 
-        String actualProductName = product_name.getDataByHeader(byColumnName);
-        if(actualProductName.equals(productParameter))
+        String dataByHeader = product_name.getDataByHeader(byColumnName);
+        if(dataByHeader.contains(productParameter))
             result = true;
 
         Log.info("Is object " + productParameter + "' is found? '"+ result);

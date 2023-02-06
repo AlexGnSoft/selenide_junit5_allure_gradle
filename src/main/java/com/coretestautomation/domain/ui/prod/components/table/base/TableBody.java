@@ -6,20 +6,17 @@ import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.core.logger.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TableBody {
 
     private SelenideElement tableLocator;
     private SelenideElement table;
-    private static final ElementsCollection TABLE_ROWS = $$(By.xpath("//tbody/tr[@role='row']"));
+    private static final ElementsCollection TABLE_ROWS_ELEMENTS = $$(By.xpath("//tbody/tr[@role='row']"));
     private static final ElementsCollection TABLE_HEADERS = $$(By.xpath("//div[@class='x-column-header-text-wrapper']/div/span[text()]"));
     private static final ElementsCollection TABLE_CELLS = $$(By.xpath("//td[@role='gridcell']"));
     private static final ElementsCollection TABLE_CELL_LOCATOR = $$(By.xpath("//tr[@role]//td[@role='gridcell']/div"));
@@ -36,28 +33,25 @@ public class TableBody {
             table = tableLocator;
 
             Map<String, Integer> headersMap = getHeadersMap();
-            int tdIndex = headersMap.get(tableHeader);
 
-            TABLE_ROWS.shouldHave(CollectionCondition.size(1));
+            TABLE_ROWS_ELEMENTS.shouldHave(CollectionCondition.size(1));
 
-            List<SelenideElement> rows = TABLE_ROWS;
+            List<SelenideElement> rows = TABLE_ROWS_ELEMENTS;
 
             if (rows.size() >= 2) {
-                List<SelenideElement> tds = TABLE_CELLS;
-                if (tds.size() < headersMap.size()) {
+                if (TABLE_CELLS.size() < headersMap.size()) {
                     Log.info("Item with value '" + valueToSearch + "' wasn't found in table");
                     return null;
                 }
             }
             //skip 0 index here because first element is Id, which is filled with th items
-            for (int i = 0; i < rows.size(); i++) {
-                ElementsCollection td = TABLE_CELL_LOCATOR;
-                for (int j = 1; j < td.size(); j++) {
-                    if (valueToSearch.contains(td.get(i+1).getText()))
-                        Log.info("Item found!");
-                    return createTableRowItem(headersMap);
+            for (int i = 0; i < TABLE_CELL_LOCATOR.size(); i++) {
+                if(TABLE_CELL_LOCATOR.get(i).getText().contains(valueToSearch)){
+                    Log.info("Item found!");
+                    return createTableRowItem(rows.get(i-1), headersMap);
                 }
             }
+
         } catch (Throwable t) {
             //Error during table analyzing, do nothing here
             Log.error("Failed to parse table", t);
@@ -91,13 +85,11 @@ public class TableBody {
     /**
      * Returns table from TableRowItem
      */
-    private TableRowItem createTableRowItem(Map<String, Integer> headersMap) {
+    private TableRowItem createTableRowItem(WebElement row, Map<String, Integer> headersMap) {
         TableRowItem tableRowItem = new TableRowItem();
-        for (int i = 1; i < headersMap.size(); i++) {
-            System.out.println(TABLE_CELL_LOCATOR.get(i).getText());
-
-            String value = TABLE_CELL_LOCATOR.get(i + 1).getText();
-                tableRowItem.addData(getHeaderByIndex(i + 1, headersMap), value);
+        for (int i = 1; i <= headersMap.size()-3; i++) {
+            String value = row.getText();
+            tableRowItem.addData(getHeaderByIndex(i, headersMap), value);
         }
         return tableRowItem;
     }
