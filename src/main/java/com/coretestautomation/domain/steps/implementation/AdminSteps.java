@@ -9,6 +9,8 @@ import com.coretestautomation.domain.steps.interfaces.IAdminSteps;
 import com.coretestautomation.domain.ui.prod.components.table.base.TableRowItem;
 import io.qameta.allure.Step;
 
+import static com.codeborne.selenide.Condition.visible;
+
 public class AdminSteps implements IAdminSteps {
 
     private final PagesContainer page;
@@ -26,18 +28,33 @@ public class AdminSteps implements IAdminSteps {
             page.dashboardPage.headerMenu.adminHeaderTab.click();
         }
 
-       page.adminPage.sideBarMenu.openItem("Product Maintenance", 10);
+       page.adminPage.sideBarMenu.openItem("Product Maintenance");
        page.productMaintenancePage.addProductBtn.click();
        popUp.addProductPopUp.shouldBeVisibleHaveText(popUp.addProductPopUp.addProductPopUpTitle, "Add a Product");
        popUp.addProductPopUp.productNameField.setValue(product.getProductName());
        popUp.addProductPopUp.manufacturerField.setValue(product.getManufacturer());
        popUp.addProductPopUp.saveBtn.click();
-       popUp.addProductPopUp.productSuccessfullySavedMessage.shouldBe(Condition.visible);
+       popUp.addProductPopUp.productSuccessfullySavedMessage.shouldBe(visible);
        popUp.addProductPopUp.OkStatusBtn.click();
 
        return this;
     }
 
+    @Step("Update product")
+    @Override
+    public AdminSteps updateProduct(Product product) {
+        Log.info("Updating a product with name: ' " + product.getProductName() + " '");
+
+        page.productMaintenancePage.clickOnVisible(page.productMaintenancePage.editProductIcon);
+        popUp.addProductPopUp.productNameField.shouldBe(visible).setValue(product.getProductName());
+        popUp.addProductPopUp.saveBtn.click();
+        popUp.addProductPopUp.productSuccessfullySavedMessage.shouldBe(visible);
+        popUp.addProductPopUp.OkStatusBtn.click();
+
+        return this;
+    }
+
+    @Step("Find Product")
     @Override
     public boolean findProduct(Product product) {
         Log.info("Performing search for a product with name: ' " + product.getProductName() + " '");
@@ -48,6 +65,7 @@ public class AdminSteps implements IAdminSteps {
         return page.productMaintenancePage.productMaintenanceTable.isProductInTheList();
     }
 
+    @Step("Verify That Object Existence In Table")
     @Override
     public boolean verifyObjectExistenceInTable(String productParameter, String byColumnName){
         boolean result = false;
@@ -60,5 +78,36 @@ public class AdminSteps implements IAdminSteps {
 
         Log.info("Is object " + productParameter + "' is found? '"+ result);
         return result;
+    }
+
+    @Step("add new product to product listing")
+    @Override
+    public AdminSteps addNewProductListing(Product product, String drugNDC) {
+        if(!page.productListingPage.isOpened(page.productListingPage.addProductListingBtn)){
+            page.productMaintenancePage.sideBarMenu.openItem("Product Listing Maintenance");
+        }
+
+        page.productListingPage.addProductListingBtn.click();
+        popUp.addNewProductListingPopUp.shouldBeVisibleHaveText(popUp.addNewProductListingPopUp.addProductListingPopUpTitle,"Add New ProductListing");
+        popUp.addNewProductListingPopUp.selectProductField.click();
+
+        //wait for FE fixes to get locators from disappearing pop up
+        popUp.addNewProductListingPopUp.searchField.setValue(product.getProductName());
+        popUp.addNewProductListingPopUp.searchBtn.click();
+
+        page.productMaintenancePage.sleepWait(4000);
+
+
+        return this;
+    }
+
+
+
+    @Override
+    public boolean findProductListing(Product product, String drugNDC) {
+
+
+
+        return true;
     }
 }

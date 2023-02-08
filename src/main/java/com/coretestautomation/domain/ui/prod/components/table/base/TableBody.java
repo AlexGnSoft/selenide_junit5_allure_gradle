@@ -34,6 +34,7 @@ public class TableBody {
 
             Map<String, Integer> headersMap = getHeadersMap();
 
+            //To verify that the only one item was found
             TABLE_ROWS_ELEMENTS.shouldHave(CollectionCondition.size(1));
 
             List<SelenideElement> rows = TABLE_ROWS_ELEMENTS;

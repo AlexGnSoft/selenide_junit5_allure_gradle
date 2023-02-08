@@ -16,6 +16,15 @@ public interface IAdminSteps extends IBaseSteps{
     AdminSteps addNewProduct(Product product);
 
     /**
+     * Update product
+     *
+     * @param product                 product as an object
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps updateProduct(Product product);
+
+    /**
      * Find a product
      *
      *      * Note! Table can contain several products which names starts by the same letters
@@ -42,6 +51,26 @@ public interface IAdminSteps extends IBaseSteps{
      * @return true if product exist, otherwise false
      */
     boolean verifyObjectExistenceInTable(String productParameter, String byColumnName);
+
+    /**
+     * Adding new product listing
+     *
+     * @param product      product as an object
+     * @param drugNDC      National Drug Code for a product
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps addNewProductListing(Product product, String drugNDC);
+
+    /**
+     * Find a product listing
+     *
+     * @param product  product as an object
+     * @param drugNDC  National Drug Code for a product
+     *
+     * @return true if product exist, otherwise false
+     */
+    boolean findProductListing(Product product, String drugNDC);
 
 
 

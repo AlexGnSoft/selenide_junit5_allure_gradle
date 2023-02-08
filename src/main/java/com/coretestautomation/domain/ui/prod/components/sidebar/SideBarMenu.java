@@ -15,10 +15,9 @@ public class SideBarMenu extends AbstractComponent {
     public final ElementsCollection sideBarItems = $$(By.xpath("//div[@class='x-dataview-item']/div[contains(text(),'')]"));
 
 
-    public void openItem(String sideBarItemName, int minSizeOfSideBarToBeInteractive){
+    public void openItem(String sideBarItemName){
 
         if(sideBarElement.isDisplayed()){
-            sideBarItems.shouldHave(CollectionCondition.sizeGreaterThan(minSizeOfSideBarToBeInteractive));
 
             for (SelenideElement sideBarItem : sideBarItems) {
                 if (sideBarItem.getText().contains(sideBarItemName)) {

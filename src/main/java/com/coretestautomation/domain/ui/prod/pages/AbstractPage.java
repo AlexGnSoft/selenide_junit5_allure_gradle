@@ -2,7 +2,6 @@ package com.coretestautomation.domain.ui.prod.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.domain.ui.prod.components.sidebar.SideBarMenu;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -10,6 +9,8 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class AbstractPage implements IUtilAbstract {
 
     public SideBarMenu sideBarMenu;
+    public String name;
+    protected SelenideElement innerElement;
 
     public AbstractPage() {
         sideBarMenu = new SideBarMenu();
