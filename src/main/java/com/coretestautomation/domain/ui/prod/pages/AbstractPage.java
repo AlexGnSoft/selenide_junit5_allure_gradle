@@ -9,8 +9,6 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class AbstractPage implements IUtilAbstract {
 
     public SideBarMenu sideBarMenu;
-    public String name;
-    protected SelenideElement innerElement;
 
     public AbstractPage() {
         sideBarMenu = new SideBarMenu();

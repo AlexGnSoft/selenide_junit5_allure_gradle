@@ -22,5 +22,4 @@ public class ProductMaintenancePage extends AbstractPage {
         productMaintenanceTable = new ItemsTable(productMaintenanceTableLocator);
     }
 
-
 }

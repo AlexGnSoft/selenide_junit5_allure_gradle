@@ -34,9 +34,9 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
 
         steps.adminSteps
                 .addNewProduct(product)
-                .findProduct(product);
+                .findProductOnProductMaintenance(product);
 
-        boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInTable(product.getProductName(), "Product Name");
+        boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInProductMaintenanceTable(product.getProductName(), "Product Name");
 
         Assertions.assertTrue(verifyProductByName, "Product was not added");
     }
@@ -52,13 +52,13 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
 
         steps.adminSteps
                 .addNewProduct(product)
-                .findProduct(product);
+                .findProductOnProductMaintenance(product);
 
         steps.adminSteps
                 .updateProduct(updatedProduct)
-                .findProduct(updatedProduct);
+                .findProductOnProductMaintenance(updatedProduct);
 
-        boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInTable(updatedProduct.getProductName(), "Product Name");
+        boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInProductMaintenanceTable(updatedProduct.getProductName(), "Product Name");
 
         Assertions.assertTrue(verifyProductByName, "Product was not updated");
     }
@@ -73,11 +73,16 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
 
         steps.adminSteps
                 .addNewProduct(product)
-                .addNewProductListing(product, NDC);
-               //.findProductListing(product, NDC);
+                .addNewProductListing(product,  DRUG_STRENGTH, NDC)
+                .findProductOnListingMaintenance(product);
 
-       // boolean verifyProductListingByName = steps.adminSteps.verifyObjectExistenceInTable(product.getProductName(), "Product Name");
+        boolean verifyProductListingByName = steps.adminSteps.verifyObjectExistenceInProductListingMaintenanceTable(product.getProductName(), "Product Name");
+        boolean isNdcCorrect = steps.adminSteps.isNdcCorrect(NDC);
+        boolean strengthCorrect = steps.adminSteps.isStrengthCorrect(DRUG_STRENGTH);
 
-       //Assertions.assertTrue(verifyProductListingByName, "Product listing was not added");
+        Assertions.assertTrue(verifyProductListingByName, "Product listing was not added");
+        Assertions.assertTrue(isNdcCorrect, "Product NDC was not added");
+        Assertions.assertTrue(strengthCorrect, "Product Strength was not added");
+
     }
 }
