@@ -108,6 +108,31 @@ public interface IAdminSteps extends IBaseSteps{
      */
     AdminSteps addNewProductListing(Product product, String drugNDC, String drugStrength);
 
+    /**
+     * Change product status from active to inactive
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps inactivateProduct(Product product);
+
+    /**
+     * Change product status from inactive to active
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps activateProduct(Product product);
+
+    /**
+     * Check product status
+     *
+     * @param product                   product status of which you need to verify
+     * @param expectedProductStatus     the expected product status
+     *
+     * @return true if product is found in the corresponding tabs
+     * (of Active or Inactive) on  Product Maintenance page, otherwise false
+     */
+    boolean checkProductStatus(Product product, String expectedProductStatus);
+
 
 
 

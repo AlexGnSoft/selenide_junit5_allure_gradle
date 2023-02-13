@@ -2,18 +2,18 @@ package smoke.product_level;
 
 import com.coretestautomation.domain.entities.product.Product;
 import com.coretestautomation.domain.steps.holders.StepsContainer;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Product maintenance tests")
-public class ProductMaintenanceLevel extends AbstractProductLevelTest{
+public class ProductMaintenanceLevel extends AbstractProductLevelTest {
 
     private static Product product;
     private static StepsContainer steps;
-    private static  String NDC;
-    private static  String DRUG_STRENGTH;
+    private static String NDC;
+    private static String DRUG_STRENGTH;
 
     @BeforeAll
     public static void prepareClientData() {
@@ -38,7 +38,7 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
 
         boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInProductMaintenanceTable(product.getProductName(), "Product Name");
 
-        Assertions.assertTrue(verifyProductByName, "Product was not added");
+        assertTrue(verifyProductByName, "Product was not added");
     }
 
 
@@ -60,7 +60,7 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
 
         boolean verifyProductByName = steps.adminSteps.verifyObjectExistenceInProductMaintenanceTable(updatedProduct.getProductName(), "Product Name");
 
-        Assertions.assertTrue(verifyProductByName, "Product was not updated");
+        assertTrue(verifyProductByName, "Product was not updated");
     }
 
     @Test
@@ -73,16 +73,58 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest{
 
         steps.adminSteps
                 .addNewProduct(product)
-                .addNewProductListing(product,  DRUG_STRENGTH, NDC)
+                .addNewProductListing(product, DRUG_STRENGTH, NDC)
                 .findProductOnListingMaintenance(product);
 
         boolean verifyProductListingByName = steps.adminSteps.verifyObjectExistenceInProductListingMaintenanceTable(product.getProductName(), "Product Name");
         boolean isNdcCorrect = steps.adminSteps.isNdcCorrect(NDC);
-        boolean strengthCorrect = steps.adminSteps.isStrengthCorrect(DRUG_STRENGTH);
+        boolean isStrengthCorrect = steps.adminSteps.isStrengthCorrect(DRUG_STRENGTH);
 
-        Assertions.assertTrue(verifyProductListingByName, "Product listing was not added");
-        Assertions.assertTrue(isNdcCorrect, "Product NDC was not added");
-        Assertions.assertTrue(strengthCorrect, "Product Strength was not added");
 
+        assertTrue(verifyProductListingByName, "Product listing was not added");
+        assertTrue(isNdcCorrect, "Product NDC was not added");
+        assertTrue(isStrengthCorrect, "Product Strength was not added");
+    }
+
+
+    @Test
+    @DisplayName("Assign Product as Active product")
+    public void assignProductAsActiveProduct_OR_T47() {
+        //Test data
+        Product product = new Product();
+        product.setProductName("AutoTestProduct " + getRandomString());
+        product.setManufacturer("Nate test 12/14/22");
+        String expectedProductStatus = "Active";
+
+        steps.adminSteps
+                .addNewProduct(product)
+                .findProductOnProductMaintenance(product);
+
+        steps.adminSteps.inactivateProduct(product);
+        steps.adminSteps.activateProduct(product);
+
+        boolean isProductInActiveState = steps.adminSteps.checkProductStatus(product, expectedProductStatus);
+
+       assertTrue(isProductInActiveState, "Product status is not " + "'" +  expectedProductStatus + "'");
+    }
+
+    @Test
+    @DisplayName("Assign Product as Inactive product")
+    public void assignProductAsInactiveProduct_OR_T48() {
+        //Test data
+        Product product = new Product();
+        product.setProductName("AutoTestProduct " + getRandomString());
+        product.setManufacturer("Nate test 12/14/22");
+        String expectedProductStatus = "Not Active";
+
+        steps.adminSteps
+                .addNewProduct(product)
+                .findProductOnProductMaintenance(product);
+
+        steps.adminSteps.inactivateProduct(product);
+
+        boolean isProductInNotActiveState = steps.adminSteps.checkProductStatus(product, expectedProductStatus);
+
+        assertTrue(isProductInNotActiveState, "Product status is not " + "'" +  expectedProductStatus + "'");
     }
 }
