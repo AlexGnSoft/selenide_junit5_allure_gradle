@@ -5,7 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 public interface IUtilAbstract {
 
     /**
-     * Service method to stop driver execution
+     * Service method to stop driver execution. Should be used in test development purposes.
      *
      * @param milliSeconds   number of millisecond webDriver stops its execution
      */
@@ -45,6 +45,19 @@ public interface IUtilAbstract {
 
     void clickOnVisible(SelenideElement selenideElement);
 
+    /**
+     * Method is used to verify that checkBox is checked
+     *
+     * @param webElement  checkBox
+     */
+    boolean isChecked(SelenideElement webElement);
+
+    /**
+     * Method is used to uncheck checked element (checkbox)
+     *
+     * @param webElement  checkBox
+     */
+    void unCheck(SelenideElement webElement);
 
 
 }

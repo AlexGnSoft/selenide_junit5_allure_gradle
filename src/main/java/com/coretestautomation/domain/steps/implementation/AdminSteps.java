@@ -2,6 +2,7 @@ package com.coretestautomation.domain.steps.implementation;
 
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.core.logger.Log;
+import com.coretestautomation.domain.entities.offer.OfferType;
 import com.coretestautomation.domain.entities.product.Product;
 import com.coretestautomation.domain.steps.holders.PagesContainer;
 import com.coretestautomation.domain.steps.holders.PopUpsContainer;
@@ -240,5 +241,49 @@ public class AdminSteps implements IAdminSteps {
                 Log.error("Product state of unknown");
                 return false;
         }
+    }
+
+    @Step("Edit channel and select offers")
+    @Override
+    public AdminSteps editChannel(String channelName, OfferType offerTypeOne, OfferType offerTypeTwo) {
+        if (!page.adminPage.isOpened(page.adminPage.adminSideBarTitle)) {
+            page.dashboardPage.headerMenu.adminHeaderTab.click();
+        }
+
+        page.adminPage.sideBarMenu.openItem("Channel Maintenance");
+        page.channelMaintenancePage.activePressedBtn.shouldBe(visible);
+        page.channelMaintenancePage.searchItems.searchStartTypingToFilterGrid.setValue(channelName);
+        page.channelMaintenancePage.singleLineTableElement.shouldBe(visible);
+        page.channelMaintenancePage.editChannelIcon.click();
+        popUp.editChannelPopUp.selectOfferTypeDropDown.click();
+        popUp.editChannelPopUp.removeAllOfferTypesBtn.click();
+
+        //if ((offerTypeOne.getValue().equals("Brand offer")) && offerTypeTwo.getValue().equals("Cash offer")) {
+            popUp.editChannelPopUp.branchOfferCheckBox.click();
+            popUp.editChannelPopUp.cashOfferCheckBox.click();
+       // }if("Enrollment Offer".equals(offerTypeOne.getValue()) && "Patient Support Program".equals(offerTypeTwo.getValue())){
+       //     popUp.editChannelPopUp.enrollmentOfferCheckBox.click();
+        //    popUp.editChannelPopUp.patientSupportProgramCheckBox.click();
+        //}
+
+
+
+        popUp.editChannelPopUp.saveBtn.click();
+        popUp.editChannelPopUp.OkStatusBtn.click();
+
+        return this;
+    }
+
+    @Override
+    public boolean verifyChannelActiveInDropDown(String channelName) {
+        if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
+            page.dashboardPage.sideBarMenu.openItem("Offer Maintenance");
+        }
+
+        page.offerMaintenancePage.addOfferBtn.click();
+        popUp.addNewOfferPopUp.addNewOfferPopUpTitle.shouldBe(visible);
+        popUp.addNewOfferPopUp.selectEmrBtn.click();
+
+        return popUp.addNewOfferPopUp.isChannelDisplayedInOptionList(channelName);
     }
 }

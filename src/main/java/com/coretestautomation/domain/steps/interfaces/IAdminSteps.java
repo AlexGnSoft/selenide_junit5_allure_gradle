@@ -1,6 +1,8 @@
 package com.coretestautomation.domain.steps.interfaces;
 
 
+import com.codeborne.selenide.SelenideElement;
+import com.coretestautomation.domain.entities.offer.OfferType;
 import com.coretestautomation.domain.entities.product.Product;
 import com.coretestautomation.domain.steps.implementation.AdminSteps;
 
@@ -132,6 +134,22 @@ public interface IAdminSteps extends IBaseSteps{
      * (of Active or Inactive) on  Product Maintenance page, otherwise false
      */
     boolean checkProductStatus(Product product, String expectedProductStatus);
+
+    /**
+     * Used to edit channel and select offer in Display in Offer Indicator dropDown
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps editChannel(String channelName, OfferType offerTypeOne, OfferType offerTypeTwo);
+
+    /**
+     * Verify that channel is displayed in on Offer Level, channel 'Active In' drop-down
+     * depending on the selected offers on Channel Maintenance tab
+     *
+     * @return true if channel is displayed, otherwise false
+     */
+    boolean verifyChannelActiveInDropDown(String channelName);
+
 
 
 

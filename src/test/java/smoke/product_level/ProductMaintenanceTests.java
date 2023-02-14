@@ -1,5 +1,6 @@
 package smoke.product_level;
 
+import base.BaseTest;
 import com.coretestautomation.domain.entities.product.Product;
 import com.coretestautomation.domain.steps.holders.StepsContainer;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Product maintenance tests")
-public class ProductMaintenanceLevel extends AbstractProductLevelTest {
+public class ProductMaintenanceTests extends BaseTest {
 
     private static Product product;
     private static StepsContainer steps;
@@ -16,7 +17,7 @@ public class ProductMaintenanceLevel extends AbstractProductLevelTest {
     private static String DRUG_STRENGTH;
 
     @BeforeAll
-    public static void prepareClientData() {
+    public static void prepareData() {
         steps = new StepsContainer();
         product = new Product();
         product.setManufacturer("Nate test 12/14/22");
