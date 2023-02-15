@@ -14,6 +14,13 @@ public interface ILoginSteps extends IBaseSteps{
     LoginSteps loginAs(String userId, String password);
 
     /**
+     * Performs log out (required for new test class tests to be started from the scratch
+     *
+     * @return LoginSteps object
+     */
+    LoginSteps loginOut();
+
+    /**
      * Returns true if user is logged in.
      *
      * @return true if user is logged in.

@@ -15,6 +15,9 @@ public class HeaderMenu extends AbstractComponent {
     public final SelenideElement userProfileHeaderTab = $(By.xpath("//span[text()='User Profile']"));
     public final SelenideElement programProfileHeaderTab = $(By.xpath("//span[text()='Program Profile']"));
     public final SelenideElement qaToolHeaderTab = $(By.xpath("//span[text()='QA Tool']"));
+    public final SelenideElement welcomeEmailDropDown = $(By.xpath("//span[text()='agnuskin@optimizerx.com']"));
+    public final SelenideElement logOutBtn = $(By.xpath("//span[text()='Log out']"));
+
 
     public boolean isUserLoggedIn(String username) {
         By element = By.xpath(String.format(USERNAME_SPAN, username));

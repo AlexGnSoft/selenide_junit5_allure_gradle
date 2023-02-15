@@ -4,6 +4,8 @@ import com.coretestautomation.core.logger.Log;
 import com.coretestautomation.domain.steps.holders.PagesContainer;
 import com.coretestautomation.domain.steps.interfaces.ILoginSteps;
 
+import static com.codeborne.selenide.Condition.visible;
+
 public class LoginSteps implements ILoginSteps {
 
     public PagesContainer page;
@@ -18,6 +20,14 @@ public class LoginSteps implements ILoginSteps {
         page.loginPage.login.setValue(userId);
         page.loginPage.password.setValue(password);
         page.loginPage.signInBtn.click();
+
+        return this;
+    }
+
+    @Override
+    public LoginSteps loginOut() {
+        page.dashboardPage.headerMenu.welcomeEmailDropDown.click();
+        page.dashboardPage.headerMenu.logOutBtn.shouldBe(visible).click();
 
         return this;
     }

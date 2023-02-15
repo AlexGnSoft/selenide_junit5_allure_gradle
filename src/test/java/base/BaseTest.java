@@ -7,6 +7,7 @@ import com.coretestautomation.core.listener.AllureSetup;
 import com.coretestautomation.core.listener.TestResultsListener;
 import com.coretestautomation.core.logger.Log;
 import com.coretestautomation.domain.steps.holders.StepsContainer;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -21,7 +22,6 @@ public class BaseTest implements IDataGenerator {
     protected static String userId = propertiesFile.getUserId();
     protected static String password = propertiesFile.getPassword();
 
-
     @BeforeAll
     public static void beforeAll() {
         Configuration.headless = false;
@@ -34,7 +34,6 @@ public class BaseTest implements IDataGenerator {
 
         steps.loginSteps.loginAs(userId, password);
         steps.loginSteps.isUserLoggedIn(userId);
-
     }
 
     @BeforeEach
@@ -43,4 +42,8 @@ public class BaseTest implements IDataGenerator {
         Log.info("Test " + "'" + callingTest + "'" + " started!");
     }
 
+    @AfterAll
+    public static void afterAll() {
+        steps.loginSteps.loginOut();
+    }
 }

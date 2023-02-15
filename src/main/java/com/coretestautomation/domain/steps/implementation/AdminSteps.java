@@ -1,5 +1,6 @@
 package com.coretestautomation.domain.steps.implementation;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.core.logger.Log;
 import com.coretestautomation.domain.entities.offer.OfferType;
@@ -11,9 +12,9 @@ import com.coretestautomation.domain.ui.prod.components.table.base.TableRowItem;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
-
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+
 
 public class AdminSteps implements IAdminSteps {
 
@@ -245,7 +246,7 @@ public class AdminSteps implements IAdminSteps {
 
     @Step("Edit channel and select offers")
     @Override
-    public AdminSteps editChannel(String channelName, OfferType offerTypeOne, OfferType offerTypeTwo) {
+    public AdminSteps editChannel(String channelName, OfferType offerType) {
         if (!page.adminPage.isOpened(page.adminPage.adminSideBarTitle)) {
             page.dashboardPage.headerMenu.adminHeaderTab.click();
         }
@@ -256,18 +257,11 @@ public class AdminSteps implements IAdminSteps {
         page.channelMaintenancePage.singleLineTableElement.shouldBe(visible);
         page.channelMaintenancePage.editChannelIcon.click();
         popUp.editChannelPopUp.selectOfferTypeDropDown.click();
+        popUp.editChannelPopUp.selectAllOfferTypesBtn.shouldBe(visible).click();
         popUp.editChannelPopUp.removeAllOfferTypesBtn.click();
-
-        //if ((offerTypeOne.getValue().equals("Brand offer")) && offerTypeTwo.getValue().equals("Cash offer")) {
-            popUp.editChannelPopUp.branchOfferCheckBox.click();
-            popUp.editChannelPopUp.cashOfferCheckBox.click();
-       // }if("Enrollment Offer".equals(offerTypeOne.getValue()) && "Patient Support Program".equals(offerTypeTwo.getValue())){
-       //     popUp.editChannelPopUp.enrollmentOfferCheckBox.click();
-        //    popUp.editChannelPopUp.patientSupportProgramCheckBox.click();
-        //}
-
-
-
+        popUp.editChannelPopUp.enterSearchTextOfferTypes.click();
+        popUp.editChannelPopUp.enterSearchTextOfferTypes.setValue(offerType.getValue());
+        popUp.editChannelPopUp.offerCheckBox.shouldBe(visible).click();
         popUp.editChannelPopUp.saveBtn.click();
         popUp.editChannelPopUp.OkStatusBtn.click();
 
@@ -275,14 +269,17 @@ public class AdminSteps implements IAdminSteps {
     }
 
     @Override
-    public boolean verifyChannelActiveInDropDown(String channelName) {
+    public boolean verifyChannelActiveInDropDown(String channelName, OfferType offerType) {
         if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
             page.dashboardPage.sideBarMenu.openItem("Offer Maintenance");
         }
 
         page.offerMaintenancePage.addOfferBtn.click();
         popUp.addNewOfferPopUp.addNewOfferPopUpTitle.shouldBe(visible);
-        popUp.addNewOfferPopUp.selectEmrBtn.click();
+        popUp.addNewOfferPopUp.offerTypeFieldDropDown.click();
+        popUp.addNewOfferPopUp.offerTypeFieldDropDown.setValue(offerType.getValue()).pressEnter();
+        popUp.addNewOfferPopUp.offerDescriptionField.click();
+        popUp.addNewOfferPopUp.selectEmrBtn.doubleClick();
 
         return popUp.addNewOfferPopUp.isChannelDisplayedInOptionList(channelName);
     }

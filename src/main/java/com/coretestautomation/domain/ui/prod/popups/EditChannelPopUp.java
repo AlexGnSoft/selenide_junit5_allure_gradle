@@ -8,15 +8,16 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class EditChannelPopUp extends AbstractPopUp{
 
+
     public final ElementsCollection editChannelPopUpTitle = $$(By.xpath("//div[contains(@id,'channeledit')]//div[text()='Edit Channel']"));
     public final SelenideElement selectOfferTypeDropDown = $(By.xpath("//div[@id]/input[contains(@id,'offerTypes')]"));
-    public final SelenideElement removeAllOfferTypesBtn = $(By.xpath("//div[contains(@id,'offerTypes')]//span[text()='Remove All']"));
+    public final SelenideElement enterSearchTextOfferTypes = $(By.xpath("//div[@id='offerTypes-picker-innerCt']//input[@placeholder='Enter search text']"));
+    public final SelenideElement removeAllOfferTypesBtn = $(By.xpath("//div[contains(@id,'offerTypes')]//span[contains(@id,'button')]/span[text()='Remove All']"));
     public final SelenideElement selectAllOfferTypesBtn = $(By.xpath("//div[contains(@id,'offerTypes')]//span[text()='Select All']"));
-    public final SelenideElement branchOfferCheckBox = $(By.xpath("//tr[@role='row']//td[@role='gridcell']/div[text()='Brand offer']"));
-    public final SelenideElement cashOfferCheckBox = $(By.xpath("//tr[@role='row']//td[@role='gridcell']/div[text()='Cash offer']"));
-    public final SelenideElement enrollmentOfferCheckBox = $(By.xpath("//td[@role='gridcell']/div[text()='Enrollment Offer']"));
-    public final SelenideElement patientSupportProgramCheckBox = $(By.xpath("//td[@role='gridcell']/div[text()='Patient Support Program']"));
+    public final SelenideElement offerCheckBox = $(By.xpath("//div[@class='x-grid-cell-inner x-grid-checkcolumn-cell-inner']"));
     public final SelenideElement saveBtn = $(By.xpath("//a[@role='button']//span[@id]/span[text()='Save']"));
+
+
 
 
 

@@ -81,7 +81,6 @@ public class ProductMaintenanceTests extends BaseTest {
         boolean isNdcCorrect = steps.adminSteps.isNdcCorrect(NDC);
         boolean isStrengthCorrect = steps.adminSteps.isStrengthCorrect(DRUG_STRENGTH);
 
-
         assertTrue(verifyProductListingByName, "Product listing was not added");
         assertTrue(isNdcCorrect, "Product NDC was not added");
         assertTrue(isStrengthCorrect, "Product Strength was not added");
