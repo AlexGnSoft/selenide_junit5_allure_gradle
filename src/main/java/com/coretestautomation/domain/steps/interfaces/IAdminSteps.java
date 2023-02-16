@@ -151,10 +151,4 @@ public interface IAdminSteps extends IBaseSteps{
     boolean verifyChannelActiveInDropDown(String channelName, OfferType offerType);
 
 
-
-
-
-
-
-
 }

@@ -268,6 +268,7 @@ public class AdminSteps implements IAdminSteps {
         return this;
     }
 
+    @Step("Verify that channel is displayed in on Offer Level, channel 'Active In' drop-down")
     @Override
     public boolean verifyChannelActiveInDropDown(String channelName, OfferType offerType) {
         if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
