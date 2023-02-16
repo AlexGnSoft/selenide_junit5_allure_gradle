@@ -22,6 +22,4 @@ public class AbstractPopUp extends AbstractPage {
     }
 
 
-
-
 }

@@ -1,5 +1,8 @@
 package com.coretestautomation.domain.steps.interfaces;
 
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import com.coretestautomation.domain.entities.message.MessageType;
 import com.coretestautomation.domain.entities.offer.OfferType;
 import com.coretestautomation.domain.entities.product.Product;
 import com.coretestautomation.domain.steps.implementation.AdminSteps;
@@ -140,7 +143,7 @@ public interface IAdminSteps extends IBaseSteps{
      *
      * @return IAdminSteps object
      */
-    AdminSteps editChannel(String channelName, OfferType offerType);
+    AdminSteps editChannelOfferType(String channelName, OfferType offerType);
 
     /**
      * Verify that channel is displayed in on Offer Level, channel 'Active In' drop-down
@@ -150,5 +153,43 @@ public interface IAdminSteps extends IBaseSteps{
      */
     boolean verifyChannelActiveInDropDown(String channelName, OfferType offerType);
 
+    /**
+     * Used to edit channel and select offer in Display in Offer Indicator dropDown
+     *
+     * @param messageType       offer type (Click-able Banner Message, Dynamic Banner Message etc...)
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps editChannelMessageType(String channelName, MessageType messageType);
+
+    /**
+     * Go to Offer Maintenance pop-up and click on Add Offer button
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps goToAddNewOffer();
+
+    /**
+     * Go to Message Maintenance pop-up and click on Add Message button
+     *
+     * @return IAdminSteps object
+     */
+    AdminSteps goToAddNewMessage();
+
+    /**
+     * Verify that channel is displayed in Channels drop down, depending on
+     * Message type
+     *
+     * @return true if channel is displayed, otherwise false
+     */
+    boolean verifyChannelsDisplayDropDown(String channelName, MessageType messageType);
+
+
+    /**
+     * Verify that channel is displayed in Channels drop down,
+     *
+     * @return true if channel is displayed, otherwise false
+     */
+    boolean isChannelDisplayedInOptionList(SelenideElement channelDropDown, ElementsCollection elements, String channelName);
 
 }

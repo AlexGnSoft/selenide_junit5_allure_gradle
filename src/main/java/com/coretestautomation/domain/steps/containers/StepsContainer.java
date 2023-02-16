@@ -1,4 +1,4 @@
-package com.coretestautomation.domain.steps.holders;
+package com.coretestautomation.domain.steps.containers;
 
 import com.coretestautomation.domain.steps.implementation.AdminSteps;
 import com.coretestautomation.domain.steps.implementation.LoginSteps;

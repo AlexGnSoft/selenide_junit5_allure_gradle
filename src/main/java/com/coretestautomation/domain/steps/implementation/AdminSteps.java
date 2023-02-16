@@ -1,17 +1,24 @@
 package com.coretestautomation.domain.steps.implementation;
 
-import com.codeborne.selenide.Condition;
+import com.beust.ah.A;
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.core.logger.Log;
+import com.coretestautomation.domain.entities.message.MessageType;
 import com.coretestautomation.domain.entities.offer.OfferType;
 import com.coretestautomation.domain.entities.product.Product;
-import com.coretestautomation.domain.steps.holders.PagesContainer;
-import com.coretestautomation.domain.steps.holders.PopUpsContainer;
+import com.coretestautomation.domain.steps.containers.PagesContainer;
+import com.coretestautomation.domain.steps.containers.PopUpsContainer;
 import com.coretestautomation.domain.steps.interfaces.IAdminSteps;
 import com.coretestautomation.domain.ui.prod.components.table.base.TableRowItem;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -246,7 +253,7 @@ public class AdminSteps implements IAdminSteps {
 
     @Step("Edit channel and select offers")
     @Override
-    public AdminSteps editChannel(String channelName, OfferType offerType) {
+    public AdminSteps editChannelOfferType(String channelName, OfferType offerType) {
         if (!page.adminPage.isOpened(page.adminPage.adminSideBarTitle)) {
             page.dashboardPage.headerMenu.adminHeaderTab.click();
         }
@@ -262,8 +269,90 @@ public class AdminSteps implements IAdminSteps {
         popUp.editChannelPopUp.enterSearchTextOfferTypes.click();
         popUp.editChannelPopUp.enterSearchTextOfferTypes.setValue(offerType.getValue());
         popUp.editChannelPopUp.offerCheckBox.shouldBe(visible).click();
+        popUp.editChannelPopUp.selectOfferTypeDropDown.click();
         popUp.editChannelPopUp.saveBtn.click();
         popUp.editChannelPopUp.OkStatusBtn.click();
+
+        return this;
+    }
+
+    @Step("Edit channel and select message")
+    @Override
+    public AdminSteps editChannelMessageType(String channelName, MessageType messageType) {
+        if (!page.adminPage.isOpened(page.adminPage.adminSideBarTitle)) {
+            page.dashboardPage.headerMenu.adminHeaderTab.click();
+        }
+
+        page.adminPage.sideBarMenu.openItem("Channel Maintenance");
+        page.channelMaintenancePage.activePressedBtn.shouldBe(visible);
+        page.channelMaintenancePage.searchItems.searchStartTypingToFilterGrid.setValue(channelName);
+        page.channelMaintenancePage.singleLineTableElement.shouldBe(visible);
+        page.channelMaintenancePage.editChannelIcon.click();
+
+        popUp.editChannelPopUp.selectMessageTypeDropDown.click();
+        popUp.editChannelPopUp.selectAllMessageTypesBtn.shouldBe(visible).click();
+        popUp.editChannelPopUp.removeAllMessageTypesBtn.click();
+        popUp.editChannelPopUp.enterSearchTextMessageTypes.click();
+        popUp.editChannelPopUp.enterSearchTextMessageTypes.setValue(messageType.getValue());
+        popUp.editChannelPopUp.messageCheckBox.shouldBe(visible).click();
+        popUp.editChannelPopUp.selectMessageTypeDropDown.click();
+        popUp.editChannelPopUp.saveBtn.click();
+        popUp.editChannelPopUp.OkStatusBtn.click();
+
+        return this;
+    }
+
+    @Override
+    public AdminSteps goToAddNewMessage() {
+        if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
+            page.dashboardPage.sideBarMenu.openItem("Message Maintenance");
+        }
+
+        page.messageMaintenancePage.addMessageBtn.click();
+        popUp.addNewMessagePopUp.addNewMessagePopUpTitle.shouldBe(visible);
+
+        return this;
+    }
+
+    @Override
+    public boolean verifyChannelsDisplayDropDown(String channelName, MessageType messageType) {
+        boolean isDisplayed = false;
+        popUp.addNewMessagePopUp.selectChannelDropDown.setValue(channelName);
+        popUp.addNewMessagePopUp.selectChannelDropDown.click();
+
+        ArrayList<String> channelsList = new ArrayList<>();
+        for (int i = 0; i < popUp.addNewMessagePopUp.channelsPickerList.size(); i++) {
+            channelsList.add(popUp.addNewMessagePopUp.channelsPickerList.get(i).getText());
+        }
+
+        for (int i = 0; i < channelsList.size(); i++)
+            if (channelsList.get(i).contains(channelName)) {
+                popUp.addNewMessagePopUp.nameField.doubleClick();
+
+                for (int j = 0; j < popUp.abstractPopUp.cancelBtn.size(); j++) {
+                    popUp.abstractPopUp.cancelBtn.get(1).click();
+                }
+                isDisplayed = true;
+            } else {
+                Log.error("Error! Channel list does not contain expected channel");
+                for (int j = 0; j < popUp.abstractPopUp.cancelBtn.size(); j++) {
+                    popUp.addNewMessagePopUp.selectChannelDropDown.click();
+                    popUp.abstractPopUp.cancelBtn.get(1).click();
+                }
+            }
+
+        return isDisplayed;
+    }
+
+
+    @Override
+    public AdminSteps goToAddNewOffer() {
+        if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
+            page.dashboardPage.sideBarMenu.openItem("Offer Maintenance");
+        }
+
+        page.offerMaintenancePage.addOfferBtn.click();
+        popUp.addNewOfferPopUp.addNewOfferPopUpTitle.shouldBe(visible);
 
         return this;
     }
@@ -271,17 +360,47 @@ public class AdminSteps implements IAdminSteps {
     @Step("Verify that channel is displayed in on Offer Level, channel 'Active In' drop-down")
     @Override
     public boolean verifyChannelActiveInDropDown(String channelName, OfferType offerType) {
-        if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
-            page.dashboardPage.sideBarMenu.openItem("Offer Maintenance");
-        }
-
-        page.offerMaintenancePage.addOfferBtn.click();
-        popUp.addNewOfferPopUp.addNewOfferPopUpTitle.shouldBe(visible);
         popUp.addNewOfferPopUp.offerTypeFieldDropDown.click();
+
         popUp.addNewOfferPopUp.offerTypeFieldDropDown.setValue(offerType.getValue()).pressEnter();
         popUp.addNewOfferPopUp.offerDescriptionField.click();
         popUp.addNewOfferPopUp.selectEmrBtn.doubleClick();
 
-        return popUp.addNewOfferPopUp.isChannelDisplayedInOptionList(channelName);
+        return isChannelDisplayedInOptionList(popUp.addNewOfferPopUp.offerTypeFieldDropDown, popUp.addNewOfferPopUp.channelsPickerList, channelName);
     }
+
+    @Step("Verify that expected channel exist in channels picker list")
+    @Override
+    public boolean isChannelDisplayedInOptionList(SelenideElement channelDropDown, ElementsCollection elements, String channelName) {
+        boolean isDisplayed = false;
+        elements.shouldHave(CollectionCondition.sizeGreaterThan(15));
+
+        for (int i = 0; i < elements.size(); i++) {
+            if (elements.get(i).getText().contains(channelName)) {
+                isDisplayed = true;
+            }
+        }
+
+        Log.info("Is channel " + "'" + channelName + "'" + " displayed in drop down: " + isDisplayed);
+
+        channelDropDown.pressEnter();
+
+
+//        for (int i = 0; i < popUp.abstractPopUp.cancelBtn.size(); i++) {
+//            popUp.abstractPopUp.cancelBtn.get(1).click();
+//        }
+
+        for (int i = 0; i < popUp.abstractPopUp.cancelBtn.size(); i++) {
+            if (!popUp.abstractPopUp.cancelBtn.get(1).isDisplayed()) {
+                channelDropDown.click();
+                popUp.abstractPopUp.cancelBtn.get(1).click();
+            } else {
+                popUp.abstractPopUp.cancelBtn.get(1).click();
+            }
+
+        }
+
+        return isDisplayed;
+    }
+
 }

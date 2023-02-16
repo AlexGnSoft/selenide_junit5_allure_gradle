@@ -3,10 +3,9 @@ package base;
 import com.codeborne.selenide.Configuration;
 import com.coretestautomation.core.config.PropertiesFile;
 import com.coretestautomation.core.helper.IDataGenerator;
-import com.coretestautomation.core.listener.AllureSetup;
 import com.coretestautomation.core.listener.TestResultsListener;
 import com.coretestautomation.core.logger.Log;
-import com.coretestautomation.domain.steps.holders.StepsContainer;
+import com.coretestautomation.domain.steps.containers.StepsContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static com.codeborne.selenide.Selenide.open;
 
-@ExtendWith({TestResultsListener.class, AllureSetup.class})
+@ExtendWith({TestResultsListener.class})
 public class BaseTest implements IDataGenerator {
     protected static StepsContainer steps = new StepsContainer();
     protected static PropertiesFile propertiesFile = new PropertiesFile();
@@ -25,7 +24,7 @@ public class BaseTest implements IDataGenerator {
     @BeforeAll
     public static void beforeAll() {
         Configuration.headless = false;
-        Configuration.timeout = 8000;  //Timeout in milliseconds to fail the test, if conditions still not met
+        Configuration.timeout = 5000;  //Timeout in milliseconds to fail the test, if conditions still not met
         Configuration.browser = propertiesFile.getBrowser();
         Configuration.browserSize = propertiesFile.getBrowserSize();
         Configuration.browserVersion = propertiesFile.getBrowserVersion();

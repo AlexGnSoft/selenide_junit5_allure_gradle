@@ -2,7 +2,7 @@ package smoke.product_level;
 
 import base.BaseTest;
 import com.coretestautomation.domain.entities.product.Product;
-import com.coretestautomation.domain.steps.holders.StepsContainer;
+import com.coretestautomation.domain.steps.containers.StepsContainer;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

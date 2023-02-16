@@ -18,25 +18,4 @@ public class AddNewOfferPopUp extends AbstractPopUp {
     public final SelenideElement selectEmrBtn = $(By.xpath("//div[contains(@id,'channels')]//label[text()='Select EMR']"));
     public final ElementsCollection channelsPickerList = $$(By.xpath("//li[@role='option' and @data-boundview='channels-picker']"));
 
-
-    @Step("Verify that expected channel exist in channels picker list")
-    public boolean isChannelDisplayedInOptionList(String channelName) {
-        boolean isDisplayed = false;
-        channelsPickerList.shouldHave(CollectionCondition.sizeGreaterThan(10));
-
-        for (int i = 0; i < channelsPickerList.size(); i++) {
-            if(channelsPickerList.get(i).getText().contains(channelName)){
-                isDisplayed = true;
-            }
-        }
-
-        Log.info("Is channel " + "'" + channelName + "'" + " displayed in channels picker drop down: " + isDisplayed);
-
-
-        for (int i = 0; i < cancelBtn.size(); i++) {
-            cancelBtn.get(1).click();
-        }
-
-        return isDisplayed;
-    }
 }
