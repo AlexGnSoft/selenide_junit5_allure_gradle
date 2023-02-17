@@ -302,6 +302,7 @@ public class AdminSteps implements IAdminSteps {
         return this;
     }
 
+    @Step("Go to Add New Message view")
     @Override
     public AdminSteps goToAddNewMessage() {
         if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
@@ -314,37 +315,35 @@ public class AdminSteps implements IAdminSteps {
         return this;
     }
 
+    @Step("Verify channels display dropDown")
     @Override
     public boolean verifyChannelsDisplayDropDown(String channelName, MessageType messageType) {
         boolean isDisplayed = false;
-        popUp.addNewMessagePopUp.selectChannelDropDown.setValue(channelName);
-        popUp.addNewMessagePopUp.selectChannelDropDown.click();
+        popUp.addNewMessagePopUp.selectChannelDropDown.shouldBe(visible).click();
+        if(popUp.addNewMessagePopUp.channelsPickerList.size() < 10){
+            popUp.addNewMessagePopUp.selectChannelDropDown.click();
+        }
 
         ArrayList<String> channelsList = new ArrayList<>();
         for (int i = 0; i < popUp.addNewMessagePopUp.channelsPickerList.size(); i++) {
             channelsList.add(popUp.addNewMessagePopUp.channelsPickerList.get(i).getText());
         }
 
-        for (int i = 0; i < channelsList.size(); i++)
-            if (channelsList.get(i).contains(channelName)) {
+        for (String actualChannel : channelsList) {
+            if (actualChannel.contains(channelName)) {
                 popUp.addNewMessagePopUp.nameField.doubleClick();
-
                 for (int j = 0; j < popUp.abstractPopUp.cancelBtn.size(); j++) {
                     popUp.abstractPopUp.cancelBtn.get(1).click();
+                    isDisplayed = true;
                 }
-                isDisplayed = true;
             } else {
                 Log.error("Error! Channel list does not contain expected channel");
-                for (int j = 0; j < popUp.abstractPopUp.cancelBtn.size(); j++) {
-                    popUp.addNewMessagePopUp.selectChannelDropDown.click();
-                    popUp.abstractPopUp.cancelBtn.get(1).click();
-                }
             }
-
+        }
         return isDisplayed;
     }
 
-
+    @Step("Go to Add New Offer view")
     @Override
     public AdminSteps goToAddNewOffer() {
         if (!page.adminPage.isOpened(page.offerMaintenancePage.addOfferBtn)) {
@@ -384,11 +383,6 @@ public class AdminSteps implements IAdminSteps {
         Log.info("Is channel " + "'" + channelName + "'" + " displayed in drop down: " + isDisplayed);
 
         channelDropDown.pressEnter();
-
-
-//        for (int i = 0; i < popUp.abstractPopUp.cancelBtn.size(); i++) {
-//            popUp.abstractPopUp.cancelBtn.get(1).click();
-//        }
 
         for (int i = 0; i < popUp.abstractPopUp.cancelBtn.size(); i++) {
             if (!popUp.abstractPopUp.cancelBtn.get(1).isDisplayed()) {

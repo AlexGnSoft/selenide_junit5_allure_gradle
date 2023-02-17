@@ -1,7 +1,10 @@
 package com.coretestautomation.domain.ui.prod.components.table.base;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.core.logger.Log;
+
+import static com.codeborne.selenide.Condition.visible;
 
 public class ItemsTable {
 
@@ -16,7 +19,9 @@ public class ItemsTable {
     public void searchEnterSearchText(String searchingText){
         Log.info("Enter text " + searchingText + " to 'Search Grid Data' field");
 
+
         searchItems.searchEnterSearchText
+                .shouldBe(visible)
                 .setValue(searchingText)
                 .pressEnter();
     }
