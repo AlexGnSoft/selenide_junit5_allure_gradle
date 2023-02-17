@@ -1,6 +1,5 @@
 package com.coretestautomation.domain.steps.implementation;
 
-import com.beust.ah.A;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -17,7 +16,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
@@ -128,7 +127,7 @@ public class AdminSteps implements IAdminSteps {
         try {
             return NDC_Actual.getText().equals(NDC_Expected);
         } catch (WebDriverException ex) {
-            Log.error("Can not get NDC number", ex);
+            // Log.error("Can not get NDC number", ex);
             return false;
         }
     }
@@ -223,9 +222,9 @@ public class AdminSteps implements IAdminSteps {
                 boolean isProductInNotActiveState = findProductOnProductMaintenance(product);
 
                 if (isProductInNotActiveState) {
-                    Log.info("Product status is 'Not Active' as Expected!");
+                    //   Log.info("Product status is 'Not Active' as Expected!");
                 } else {
-                    Log.error("Product was not found in 'Not Active' product list");
+                    //  Log.error("Product was not found in 'Not Active' product list");
                 }
 
                 return isProductInNotActiveState;
@@ -238,9 +237,9 @@ public class AdminSteps implements IAdminSteps {
                 boolean isProductInActiveState = findProductOnProductMaintenance(product);
 
                 if (isProductInActiveState) {
-                    Log.info("Product status is 'Active' as Expected!");
+                    //  Log.info("Product status is 'Active' as Expected!");
                 } else {
-                    Log.error("Product was not found in 'Active' product list");
+                    // Log.error("Product was not found in 'Active' product list");
                 }
 
                 return isProductInActiveState;
@@ -320,7 +319,7 @@ public class AdminSteps implements IAdminSteps {
     public boolean verifyChannelsDisplayDropDown(String channelName, MessageType messageType) {
         boolean isDisplayed = false;
         popUp.addNewMessagePopUp.selectChannelDropDown.shouldBe(visible).click();
-        if(popUp.addNewMessagePopUp.channelsPickerList.size() < 10){
+        if (popUp.addNewMessagePopUp.channelsPickerList.size() < 10) {
             popUp.addNewMessagePopUp.selectChannelDropDown.click();
         }
 
@@ -329,16 +328,14 @@ public class AdminSteps implements IAdminSteps {
             channelsList.add(popUp.addNewMessagePopUp.channelsPickerList.get(i).getText());
         }
 
-        for (String actualChannel : channelsList) {
-            if (actualChannel.contains(channelName)) {
-                popUp.addNewMessagePopUp.nameField.doubleClick();
-                for (int j = 0; j < popUp.abstractPopUp.cancelBtn.size(); j++) {
-                    popUp.abstractPopUp.cancelBtn.get(1).click();
-                    isDisplayed = true;
-                }
-            } else {
-                Log.error("Error! Channel list does not contain expected channel");
+        if (channelsList.stream().anyMatch(x -> x.contains(channelName))) {
+            popUp.addNewMessagePopUp.nameField.doubleClick();
+            for (int j = 0; j < popUp.abstractPopUp.cancelBtn.size(); j++) {
+                popUp.abstractPopUp.cancelBtn.get(1).click();
+                isDisplayed = true;
             }
+        } else {
+            Log.error("Error! Channel list does not contain expected channel");
         }
         return isDisplayed;
     }

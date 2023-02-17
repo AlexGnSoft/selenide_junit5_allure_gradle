@@ -3,7 +3,6 @@ package com.coretestautomation.domain.steps.implementation;
 import com.coretestautomation.core.logger.Log;
 import com.coretestautomation.domain.steps.containers.PagesContainer;
 import com.coretestautomation.domain.steps.interfaces.ILoginSteps;
-
 import static com.codeborne.selenide.Condition.visible;
 
 public class LoginSteps implements ILoginSteps {
@@ -40,7 +39,7 @@ public class LoginSteps implements ILoginSteps {
             Log.info("User is successfully logged in");
             isLoggedIn = true;
         }else {
-            Log.error("User is not successfully logged in");
+          Log.error("User is not successfully logged in");
         }
 
         return isLoggedIn;

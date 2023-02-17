@@ -2,6 +2,7 @@ package com.coretestautomation.core.listener;
 
 import com.coretestautomation.core.logger.Log;
 import io.qameta.allure.Allure;
+import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
@@ -26,15 +27,16 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        Log.info("Test '" + context.getDisplayName() + "' successfully finished!");
+        String successMessage = context.getTestMethod().get().getName();
+        Log.info("FINISHED test'" + successMessage +  "' SUCCESSFULLY!");
 
         testResultsStatus.add(TestResultStatus.SUCCESSFUL);
     }
 
     @Override
     public void testFailed(ExtensionContext context, Throwable cause) {
-        String failureMessage = "Test '" +  context.getDisplayName() + "' failed! See screenshot attached.";
-        Log.error(failureMessage);
+        String failedMessage = context.getTestMethod().get().getName();
+        Log.error("FINISHED test'" + failedMessage +  "' UNSUCCESSFULLY! See screenshot attached.");
 
         testResultsStatus.add(TestResultStatus.FAILED);
 
@@ -46,23 +48,26 @@ public class TestResultsListener implements TestWatcher, AfterAllCallback {
 
     @Override
     public void testAborted(ExtensionContext context, Throwable cause) {
-        Log.info("Test '" + context.getDisplayName() + "' aborted!");
+        String abortedMessage = context.getTestMethod().get().getName();
+        Log.info("ABORTED '" + abortedMessage +  "' test!");
 
         testResultsStatus.add(TestResultStatus.ABORTED);
     }
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        Log.info("Test '" + context.getDisplayName() + "' Disabled!");
+        String disabledMessage = context.getTestMethod().get().getName();
+        Log.info("DISABLED '" + disabledMessage +  "' test!");
 
         testResultsStatus.add(TestResultStatus.DISABLED);
     }
 
     @Override
     public void afterAll(ExtensionContext context) {
+
         Map<TestResultStatus, Long> summary = testResultsStatus.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-        //Log.info("Test result summary for {} {}", context.getDisplayName(), summary.toString());
+        System.out.println("TEST RESULTS SUMMERY " + summary.toString());
     }
 }

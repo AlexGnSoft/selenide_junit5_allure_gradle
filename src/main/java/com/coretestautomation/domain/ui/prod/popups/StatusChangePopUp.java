@@ -2,7 +2,6 @@ package com.coretestautomation.domain.ui.prod.popups;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-
 import static com.codeborne.selenide.Selenide.$;
 
 public class StatusChangePopUp extends AbstractPopUp{

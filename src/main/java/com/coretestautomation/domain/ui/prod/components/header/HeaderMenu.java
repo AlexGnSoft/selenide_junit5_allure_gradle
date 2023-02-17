@@ -26,7 +26,7 @@ public class HeaderMenu extends AbstractComponent {
         try {
             return userNameSpan.getText().contains(username);
         } catch (WebDriverException ex) {
-            Log.error("Can not get username", ex);
+          Log.error("Can not get username", ex);
             return false;
         }
     }

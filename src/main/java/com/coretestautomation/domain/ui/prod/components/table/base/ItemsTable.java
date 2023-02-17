@@ -1,9 +1,7 @@
 package com.coretestautomation.domain.ui.prod.components.table.base;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.coretestautomation.core.logger.Log;
-
 import static com.codeborne.selenide.Condition.visible;
 
 public class ItemsTable {
@@ -11,12 +9,12 @@ public class ItemsTable {
     protected TableBody tableBody;
     protected SearchItems searchItems;
 
-    public ItemsTable(SelenideElement tableLocator){
+    public ItemsTable(SelenideElement tableLocator) {
         tableBody = new TableBody(tableLocator);
         searchItems = new SearchItems();
     }
 
-    public void searchEnterSearchText(String searchingText){
+    public void searchEnterSearchText(String searchingText) {
         Log.info("Enter text " + searchingText + " to 'Search Grid Data' field");
 
 
@@ -26,7 +24,7 @@ public class ItemsTable {
                 .pressEnter();
     }
 
-    public void searchSelectSearchField(String optionToBeSelected){
+    public void searchSelectSearchField(String optionToBeSelected) {
         Log.info("Select " + optionToBeSelected + " from dropDown");
 
         searchItems.searchSelectSearchField
@@ -34,7 +32,7 @@ public class ItemsTable {
                 .pressEnter();
     }
 
-    public void searchStartTypingToFilterGrid(String searchingText){
+    public void searchStartTypingToFilterGrid(String searchingText) {
         Log.info("Enter text " + searchingText + " to 'Filter Grid Data' field");
 
         searchItems.searchStartTypingToFilterGrid
@@ -42,13 +40,13 @@ public class ItemsTable {
                 .pressEnter();
     }
 
-    public void clickOnSearchButton(){
+    public void clickOnSearchButton() {
         Log.info("Perform click on Search button");
 
         searchItems.searchBtn.click();
     }
 
-    public boolean isProductInTheList(){
+    public boolean isProductInTheList() {
         boolean isFound = !searchItems.noDataToDisplayMessage.isDisplayed();
 
         Log.info("Is product found in the list: " + isFound);
