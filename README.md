@@ -1,4 +1,4 @@
-# Orbit test automation framework #
+# Test automation framework #
 Test automation framework
 
 ### Requirements ###
