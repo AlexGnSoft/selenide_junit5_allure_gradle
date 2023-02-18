@@ -1,5 +1,5 @@
 # Orbit test automation framework #
-Test automation framework for Orbit products.
+Test automation framework
 
 ### Requirements ###
 * Java 11+
@@ -11,13 +11,3 @@ Test automation framework for Orbit products.
 * All dependencies version management is done through file: libs.versions.toml (location: gradle/libs.versions.toml)
 * To see framework architecture visit:
 * Framework supports next browsers: Chrome...
-* 
-
-### How to run tests?
-Use provided gradle commands to run tests:
-* To run smoke test suite you can use this gradle command:
-  ```gradle clean test```
-* To run single test class:
-  ```gradle clean test --tests ClassName_Test.testMethodName_test -i```
-* To run single test method:
-  ```gradle clean test --tests ClassName_Test.testMethodName_test -i```
